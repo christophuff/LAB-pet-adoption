@@ -1,0 +1,76 @@
+body {
+  margin-top: 80px;
+  background: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+  ;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 50px;
+  color: white;
+  text-shadow: 0 0 2px black;
+}
+
+#container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+button {
+  padding: 10px 20px;
+  width: 100px;
+  margin: 0 10px;
+  border-radius: 10px;
+}
+
+
+.card {
+  width: 18rem;
+  background: rgb(238, 236, 234);
+  border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+  margin: 20px;
+}
+
+.card-header {
+  background: rgb(238, 236, 234);
+  padding: 5px;
+}
+
+.card img {
+  width: 18rem;
+  height: 10rem;
+}
+
+.pet-skill {
+  padding: 0 5px;
+  min-height: 100px;
+}
+
+.pet-type {
+  background: rgb(238, 236, 234);
+  padding: 20px;
+  border-top: 2px solid black;
+  text-transform: uppercase;
+}
+
+.cat {
+  background: lightblue;
+}
+
+.dog {
+  background: lightgreen;
+}
+
+.dino {
+  background: lightsalmon;
+}
