@@ -241,17 +241,72 @@ const pets = [
     }
   ];
 
-  const container = document.querySelector("#container");
-  let domString = "";
 
-  for (let i = 0; i < pets.length; i++){
-    domString += `<div class="card">
-      <div class="card-header ${pets[i].type}"><h3>${pets[i].name}</h3></div>
-      <img src="${pets[i].imageUrl}" alt="${pets[i].name}">
-      <h5 class="pet-color">Color: ${pets[i].color}</h5>
-      <p class="pet-skill">Fun Fact: ${pets[i].specialSkill}</p>
-      <div class="pet-type ${pets[i].type}">${pets[i].type}</div>
-    </div>`;
-  }
 
-container.innerHTML = domString;
+  const renderToDom = (divId, htmlToRender) => {
+    const selectedDiv = document.querySelector(divId);
+    selectedDiv.innerHTML = htmlToRender;
+  };
+
+   const cardsOnDom = (array) => {
+    let domString = "";
+  
+    for (const pets of array){
+      domString += `<div class="card">
+        <div class="card-header ${pets.type}"><h3>${pets.name}</h3></div>
+        <img src="${pets.imageUrl}" alt="A ${pets.type} named ${pets.name}">
+        <h5 class="pet-color">Color: ${pets.color}</h5>
+        <p class="pet-skill">Fun Fact: ${pets.specialSkill}</p>
+        <div class="pet-type ${pets.type}">${pets.type}</div>
+        </div>`;
+    }
+
+    renderToDom('#container', domString);
+  };
+
+  // cardsOnDom(pets);
+
+  const filter = (array, animalString) => {
+    let animalArray = [];
+
+    for (const animal of array){
+      if (animal.type === animalString) {
+        animalArray.push(animal);
+      }
+    };
+    
+    return animalArray;
+  };
+
+
+    // const dino = filter(pets, "dino");
+    // cardsOnDom(dino);
+
+    const showAll = document.querySelector("#show-all");
+    const showCats = document.querySelector("#cat-btn");
+    const showDogs = document.querySelector("#dog-btn");
+    const showDinos = document.querySelector("#dino-btn");
+
+    showAll.addEventListener("click", () => {
+      cardsOnDom(pets);
+    });
+
+    showCats.addEventListener("click", () => {
+      const cat = filter(pets, "cat");
+      cardsOnDom(cat);
+    });
+
+    showDogs.addEventListener("click", () => {
+      const dog = filter(pets, "dog");
+      cardsOnDom(dog);
+    });
+
+    showDinos.addEventListener("click", () => {
+      const dino = filter(pets, "dino");
+      cardsOnDom(dino);
+    });
+    
+
+
+  
+  
