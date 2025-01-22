@@ -149,7 +149,7 @@ const pets = [
       color: "Blue",
       specialSkill: "Listens attentively to boring stories.",
       type: "dog",
-      imageUrl: "http://dailynewsdig.com/wp-content/uploads/2014/03/Creative-And-Funny-Dog-Stock-Photography-Pictures-2.jpg"
+      imageUrl: "https://cdn.britannica.com/79/232779-050-6B0411D7/German-Shepherd-dog-Alsatian.jpg"
     },
     {
       id: 20,
@@ -241,7 +241,7 @@ const pets = [
     }
   ];
 
-
+  
 
   const renderToDom = (divId, htmlToRender) => {
     const selectedDiv = document.querySelector(divId);
@@ -257,7 +257,9 @@ const pets = [
         <img src="${pets.imageUrl}" alt="A ${pets.type} named ${pets.name}">
         <h5 class="pet-color">Color: ${pets.color}</h5>
         <p class="pet-skill">Fun Fact: ${pets.specialSkill}</p>
-        <div class="pet-type ${pets.type}">${pets.type}</div>
+        <div class="pet-type ${pets.type}"><p>${pets.type}</p>
+        <button class="delete-btn" id="delete-${pets.id}">DELETE</button>
+        </div>
         </div>`;
     }
 
@@ -286,26 +288,84 @@ const pets = [
     const showCats = document.querySelector("#cat-btn");
     const showDogs = document.querySelector("#dog-btn");
     const showDinos = document.querySelector("#dino-btn");
+    let currentPetFilter = null;
+
 
     showAll.addEventListener("click", () => {
       cardsOnDom(pets);
+      currentPetFilter = "all";
     });
 
     showCats.addEventListener("click", () => {
       const cat = filter(pets, "cat");
       cardsOnDom(cat);
+      currentPetFilter = "cats";
     });
 
     showDogs.addEventListener("click", () => {
       const dog = filter(pets, "dog");
       cardsOnDom(dog);
+      currentPetFilter = "dogs";
     });
 
     showDinos.addEventListener("click", () => {
       const dino = filter(pets, "dino");
       cardsOnDom(dino);
+      currentPetFilter = "dinos";
+    });
+
+            // add/remove form field 
+    const addPet = document.querySelector('#add-new-btn');
+    const myForm = document.querySelector('#myForm');
+    
+    addPet.addEventListener('click', () => {
+      myForm.classList.toggle('pop-up-form-click');
+    });
+
+
+              // add pets          
+    const createPet = (e) => {
+      e.preventDefault();
+
+      const newPet = {
+        id: pets.length + 1,
+        name: document.querySelector('#name').value,
+        color: document.querySelector('#color').value,
+        specialSkill: document.querySelector('#specialSkill').value,
+        type: document.querySelector('#type').value.toLowerCase(),
+        imageUrl: document.querySelector('#image').value,
+      }
+      pets.push(newPet);
+      cardsOnDom(pets);
+      myForm.reset();
+    };
+
+    myForm.addEventListener("submit", createPet);
+    
+    const container = document.querySelector("#container");
+    
+    container.addEventListener('click', (e) => {
+      if (e.target.id.includes("delete")){
+        const [, id] = e.target.id.split("-");
+        const index = pets.findIndex(e => e.id === Number(id));
+        pets.splice(index, 1);
+        cardsOnDom(pets);
+      }
+      if (currentPetFilter === "cats"){
+        const cat = filter(pets, "cat");
+        cardsOnDom(cat);
+      } else if (currentPetFilter === "dogs"){
+        const dog = filter(pets, "dog");
+        cardsOnDom(dog);
+      } else if (currentPetFilter === "dinos"){
+        const dino = filter(pets, "dino");
+        cardsOnDom(dino);
+      } else {
+        cardsOnDom(pets);
+      }
     });
     
+
 
 
   

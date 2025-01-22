@@ -23,6 +23,13 @@ h1 {
   width: 200px;
 }
 
+#add-new-btn {
+  width: 200px;
+  background-color: rgb(17, 190, 17);
+}
+
+
+
 .btn-container {
   display: flex;
   justify-content: center;
@@ -35,6 +42,21 @@ button {
   margin: 0 10px;
   border-radius: 10px;
   font-weight: bold;
+}
+
+#btn-submit {
+  padding: 10px 20px;
+  width: 100px;
+  margin: 0 10px;
+  border-radius: 10px;
+  font-weight: bold;0
+}
+
+.delete-btn {
+  color: white;
+  background: red;
+  float: right;
+  margin: 0;
 }
 
 
@@ -53,8 +75,9 @@ button {
 }
 
 .card img {
-  width: 18rem;
+  width: 16rem;
   height: 10rem;
+  margin: 10px auto;
 }
 
 .pet-skill {
@@ -69,6 +92,12 @@ button {
   text-transform: uppercase;
 }
 
+.pet-type p {
+  float: left;
+  margin: 10px 20px;
+  font-size: 20px;
+}
+
 .cat {
   background: lightblue;
 }
@@ -79,4 +108,17 @@ button {
 
 .dino {
   background: lightsalmon;
+}
+
+form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.pop-up-form {
+  display: none;
+}
+
+.pop-up-form-click {
+  display: block;
 }
