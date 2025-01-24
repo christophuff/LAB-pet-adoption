@@ -33,6 +33,7 @@ h1 {
 .btn-container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin-bottom: 40px;
 }
 
@@ -49,7 +50,7 @@ button {
   width: 100px;
   margin: 0 10px;
   border-radius: 10px;
-  font-weight: bold;0
+  font-weight: bold;
 }
 
 .delete-btn {
