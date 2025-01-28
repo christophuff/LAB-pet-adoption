@@ -241,16 +241,17 @@ const pets = [
     }
   ];
 
-  
-
+  //a variable with a function that passes in a a div to render to, and html string to render to that div
   const renderToDom = (divId, htmlToRender) => {
     const selectedDiv = document.querySelector(divId);
     selectedDiv.innerHTML = htmlToRender;
   };
 
+  // a function nested in a variable  that passes in an array. 
    const cardsOnDom = (array) => {
+    //set dom string to an empty string to add to in our for loop
     let domString = "";
-  
+    //loop through the pets (could be called anything) array using the array argument on line 251 and create a card passing in all the pets object keys
     for (const pets of array){
       domString += `<div class="card">
         <div class="card-header ${pets.type}"><h3>${pets.name}</h3></div>
@@ -262,62 +263,77 @@ const pets = [
         </div>
         </div>`;
     }
-
+    //using the render to dom function to pass in the domString HTML onto the #container div
     renderToDom('#container', domString);
   };
 
-  // cardsOnDom(pets);
 
+
+  //a function nested in a variable (filter) that passes in an array (to which we will pass in pets later) and an argument called animalString
   const filter = (array, animalString) => {
+    //let animalArray = to an empty array
     let animalArray = [];
-
+    // loop through the an array and set the animal tpye to equal to the animalString listed above (we will pass in the pets array and animal type when calling the function filter)
     for (const animal of array){
       if (animal.type === animalString) {
         animalArray.push(animal);
       }
     };
     
+    //returns an array of the selected animal
     return animalArray;
   };
 
 
-    // const dino = filter(pets, "dino");
-    // cardsOnDom(dino);
+  
 
+
+    //buttons which we will add event listeners onto below
     const showAll = document.querySelector("#show-all");
     const showCats = document.querySelector("#cat-btn");
     const showDogs = document.querySelector("#dog-btn");
     const showDinos = document.querySelector("#dino-btn");
+    //this was added to keep the current animals on the set filter when deleting animals, it was set to null to change when each button is clicked
     let currentPetFilter = null;
 
-
+    //to show all animals, we just call the cardsOnDom function and pass in the entire pets array
     showAll.addEventListener("click", () => {
       cardsOnDom(pets);
+      //pet page filter set to all pets
       currentPetFilter = "all";
-    });
+    })
 
+    //to show cats only, we call our filter function (passing in the pets array and "cat" and the pet.type) and creating a variable called cat to save it in
     showCats.addEventListener("click", () => {
       const cat = filter(pets, "cat");
+      //cardsOnDom function renders the cat variable which filtered the pets into a new array
       cardsOnDom(cat);
+      //pet page filter set to cats
       currentPetFilter = "cats";
     });
 
+    //to show dogs only, we call our filter function (passing in the pets array and "dog" and the pet.type) and creating a variable called cat to save it in
     showDogs.addEventListener("click", () => {
       const dog = filter(pets, "dog");
+      //cardsOnDom function renders the dog variable which filtered the pets into a new array
       cardsOnDom(dog);
+      //pet page filter set to dogs
       currentPetFilter = "dogs";
     });
 
+    //to show dinos only, we call our filter function (passing in the pets array and "dino" and the pet.type) and creating a variable called cat to save it in
     showDinos.addEventListener("click", () => {
       const dino = filter(pets, "dino");
+      //cardsOnDom function renders the dino variable which filtered the pets into a new array
       cardsOnDom(dino);
+      //pet page filter set to dinos
       currentPetFilter = "dinos";
     });
 
             // add/remove form field 
     const addPet = document.querySelector('#add-new-btn');
     const myForm = document.querySelector('#myForm');
-    
+    //an event listener was put on the addPet button that toggles a css class called 'pop-up-form-click' which makes the form appear/disappear
     addPet.addEventListener('click', () => {
       myForm.classList.toggle('pop-up-form-click');
     });
@@ -325,8 +341,10 @@ const pets = [
 
               // add pets          
     const createPet = (e) => {
+      //preventDefault renders the page without having to refresh because there is no local storage set up to save changes
       e.preventDefault();
 
+      //a variable called new pet takes in all the ids and values of the form inputs an sets it into an object
       const newPet = {
         id: pets.length + 1,
         name: document.querySelector('#name').value,
@@ -335,22 +353,40 @@ const pets = [
         type: document.querySelector('#type').value.toLowerCase(),
         imageUrl: document.querySelector('#image').value,
       }
+      //pushes newPet object into the pets array
       pets.push(newPet);
+      //renders newPet to the Dom
       cardsOnDom(pets);
+      //clears and resets the form
       myForm.reset();
     };
-
+    // nothing happens until the submit button is pressed, then the createPet function executes
     myForm.addEventListener("submit", createPet);
+
+
+
+    // DELETE FUNCTIONALITY
     
+    //the div where everything is rendered to. 
     const container = document.querySelector("#container");
     
+    // if anywhere in the container is clicked, grab the target of the click passing in the event paramater
     container.addEventListener('click', (e) => {
+      //if the target id includes the content "delete"
       if (e.target.id.includes("delete")){
+        //use destructuring to target the id property in the pet object (the comma lets any of the pet objects be selected)
+        // use split method to insert a hyphen between the delete button id and pet id(number in pet object)
         const [, id] = e.target.id.split("-");
+        // a function nested inside a variable, index that finds the index on the pet object by passing in the event listener id
+        //converts the id from a string to a number
         const index = pets.findIndex(e => e.id === Number(id));
+        //the spice method removes the found index and the delete number is set to 1 (which will delete the selected card and id)
         pets.splice(index, 1);
+        //the dom is refreshed
         cardsOnDom(pets);
       }
+
+      //this functionality was added to the delete function so that if an animal was deleted from a filtered page, it would stay on the filtered page0
       if (currentPetFilter === "cats"){
         const cat = filter(pets, "cat");
         cardsOnDom(cat);
